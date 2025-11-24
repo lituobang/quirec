@@ -38,35 +38,34 @@
             }
         }
     </script>
+    
     <script>
         MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']], // 启用 $...$ 作为行内公式分隔符
-                displayMath: [['$$', '$$'], ['\\[', '\\]']] // 启用 $$...$$ 和 \[...\] 作为块级公式分隔符
+                // 启用 $...$ 作为行内公式分隔符
+                inlineMath: [['$', '$'], ['\\(', '\\)']], 
+                // 启用 $$...$$ 和 \[...\] 作为块级公式分隔符
+                displayMath: [['$$', '$$'], ['\\[', '\\]']] 
             }
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+    </head>
 <body class="min-h-screen flex flex-col items-center p-4">
 
-    <!-- 语言切换按钮 (固定在右上角) -->
     <div class="fixed top-4 right-4 z-50">
         <button id="lang-button" onclick="toggleLanguage()" class="p-3 bg-primary text-white rounded-full shadow-lg hover:bg-blue-800 transition duration-150 text-sm font-semibold">
             <span data-lang-cn="Switch to English" data-lang-en="切换至中文">Switch to English</span>
         </button>
     </div>
 
-    <!-- 头部和导航栏 -->
     <header class="w-full max-w-5xl mb-12">
         <nav class="bg-white p-6 rounded-2xl shadow-xl flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 border-t-4 border-primary">
             <h1 class="text-3xl font-extrabold text-primary tracking-tight" data-lang-cn="项目背景" data-lang-en="Project Background">项目背景</h1>
-            <!-- 响应式导航链接 -->
             <div class="flex flex-wrap justify-center space-x-4">
                 <a href="index.html" class="nav-link text-secondary hover:text-primary font-medium transition duration-150 p-2 rounded-lg hover:bg-gray-100">
                     <span data-lang-cn="主页" data-lang-en="Home">主页</span>
                 </a>
-                <!-- 当前页面链接设置为 active 样式 -->
                 <a href="background.html" class="nav-link text-primary hover:text-blue-800 font-semibold transition duration-150 p-2 rounded-lg bg-primary-light active">
                     <span data-lang-cn="项目背景" data-lang-en="Project Background">项目背景</span>
                 </a>
@@ -80,10 +79,8 @@
         </nav>
     </header>
 
-    <!-- 主要内容区域：背景介绍详情 - 基于上传的 Word 文档内容 -->
     <main class="w-full max-w-5xl space-y-12">
         
-        <!-- 目录 (Table of Contents) -->
         <section id="table-of-contents" class="card bg-white p-6 rounded-2xl border-l-4 border-secondary/50">
             <h2 class="text-2xl font-extrabold text-secondary mb-4" data-lang-cn="目录" data-lang-en="Table of Contents">目录</h2>
             <nav class="text-blue-700 space-y-2">
@@ -100,7 +97,6 @@
             </nav>
         </section>
 
-        <!-- 1. 大学制度和学术规则的起源 -->
         <section id="section-origin" class="card bg-white p-8 rounded-2xl border-l-4 border-primary">
             <h2 class="text-3xl font-extrabold text-primary mb-4 border-b pb-2" data-lang-cn="1. 学术制度起源：罗马法与教会传统" data-lang-en="1. Origin of Academic System: Roman Law and Ecclesiastical Tradition">1. 学术制度起源：罗马法与教会传统</h2>
             <div class="text-secondary space-y-4 leading-relaxed">
@@ -109,7 +105,6 @@
             </div>
         </section>
 
-        <!-- 2. 当代学术规则面临的挑战 -->
         <section id="section-challenge" class="card bg-white p-8 rounded-2xl">
             <h2 class="text-3xl font-extrabold text-primary mb-4 border-b pb-2" data-lang-cn="2. 当代挑战：平均主义与工程式训练的冲突" data-lang-en="2. Contemporary Challenges: Conflict between Egalitarianism and Technical Training">2. 当代挑战：平均主义与工程式训练的冲突</h2>
             <div class="text-secondary space-y-4 leading-relaxed">
@@ -119,7 +114,6 @@
             </div>
         </section>
         
-        <!-- 3. QuIReC 模型的提出：解决方案 -->
         <section id="section-quirec" class="card bg-white p-8 rounded-2xl border-l-4 border-primary">
             <h2 class="text-3xl font-extrabold text-primary mb-4 border-b pb-2" data-lang-cn="3. QuIReC 模型：基于 CRediT 的量化方法" data-lang-en="3. The QuIReC Model: CRediT-Based Quantification Solution">3. QuIReC 模型：基于 CRediT 的量化方法</h2>
             <div class="text-secondary space-y-4 leading-relaxed">
@@ -128,10 +122,10 @@
                 <h3 id="section-s2-principle" class="text-xl font-bold text-blue-800 pt-4" data-lang-cn="3.1 核心原理：S²自加权平均法" data-lang-en="3.1 Core Principle: S² Self-Weighted Average Method">3.1 核心原理：S²自加权平均法</h3>
                 <p data-lang-cn="QuIReC 模型的 V4.0 版本采用了创新的 $S^2$ 平均法（分数平方加权平均）。该方法通过将个体的总贡献分数 $S_p$ 进行平方 $(S_p^2)$，作为其在分配贡献时的权重。这确保了高分值主体在下一级分配中获得与其价值相匹配的更高影响力，从而实现**贡献的自我加权**。" data-lang-en="Version 4.0 of the QuIReC model uses the innovative $S^2$ Average method (Score-Squared Weighted Average). This method squares the total contribution score $S_p$ of an individual $(S_p^2)$ to serve as their weighting factor during contribution allocation. This ensures that high-score entities gain a disproportionately higher influence matching their value in the next level of allocation, achieving **self-weighting of contributions**."></p>
                 <p data-lang-cn="**计算平均档位 $S_{avg}$ 的公式如下:**" data-lang-en="**The formula for calculating the Average Tier $S_{avg}$ is as follows:**" class="font-mono"></p>
-                <div class="text-center bg-gray-100 p-4 rounded-lg my-4 overflow-x-auto">
-                    <code class="text-lg font-mono text-red-600">$S_{avg} = \frac{\sum S^2}{\sum S}$</code>
+                
+                <div class="text-center bg-gray-100 p-4 rounded-lg my-4 overflow-x-auto text-lg font-mono text-red-600">
+                    $$S_{avg} = \frac{\sum S^2}{\sum S}$$
                 </div>
-
                 <h3 id="section-factors-detail" class="text-xl font-bold text-blue-800 pt-4" data-lang-cn="3.2 三大贡献因子详解" data-lang-en="3.2 Detailed Explanation of the Three Contribution Factors">3.2 三大贡献因子详解</h3>
                 <p data-lang-cn="QuIReC 沿用了 CRediT 理念，但聚焦于以下三个关键因子，并采用 1 到 6 的分档定级。" data-lang-en="QuIReC adopts the CRediT philosophy but focuses on the following three key factors, using a tier system from 1 to 6."></p>
                 <ul class="list-disc list-inside space-y-3 pl-4">
@@ -145,12 +139,10 @@
 
     </main>
 
-    <!-- 页脚 -->
     <footer class="mt-16 w-full max-w-5xl border-t pt-8 text-center text-secondary text-sm">
         <p data-lang-cn="&copy; 2025 QuIReC. All rights reserved. Thanks for the assist and support by the Google Gemini large language model for the development of this website." data-lang-en="&copy; 2025 QuIReC. All rights reserved. Thanks for the assist and support by the Google Gemini large language model for the development of this website.">&copy; 2025 QuIReC. All rights reserved. Thanks for the assist and support by the Google Gemini large language model for the development of this website.</p>
     </footer>
 
-    <!-- JavaScript for Language Toggle Logic -->
     <script>
         let currentLang = 'cn';
         
