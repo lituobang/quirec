@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-lang-cn="研究贡献量化法 (QuIReC) 首页" data-lang-en="Quantitative Index of Research Contribution (QuIReC) Home">研究贡献量化法 (QuIReC) 首页</title>
-    <!-- 引入 Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入 Lucide Icons for aesthetic icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         /* 引入 Inter 字体，并使用统一的背景色 */
@@ -44,88 +42,89 @@
 </head>
 <body class="min-h-screen flex flex-col items-center p-4">
 
-    <!-- 语言切换按钮 (固定在右上角) -->
     <div class="fixed top-4 right-4 z-50">
         <button id="lang-button" onclick="toggleLanguage()" class="p-3 bg-primary text-white rounded-full shadow-lg hover:bg-blue-800 transition duration-150 text-sm font-semibold">
             <span data-lang-cn="Switch to English" data-lang-en="切换至中文">Switch to English</span>
         </button>
     </div>
 
-    <!-- 头部和导航栏 -->
     <header class="w-full max-w-5xl mb-12">
         <nav class="bg-white p-6 rounded-2xl shadow-xl flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 border-t-4 border-primary">
-            <h1 class="text-3xl font-extrabold text-primary tracking-tight" data-lang-cn="QuIReC 项目" data-lang-en="QuIReC Project">QuIReC 项目</h1>
-            <!-- 响应式导航链接 -->
+            <h1 class="text-3xl font-extrabold text-primary tracking-tight" data-lang-cn="研究贡献量化法 (QuIReC)" data-lang-en="Quantitative Index of Research Contribution (QuIReC)">研究贡献量化法 (QuIReC)</h1>
             <div class="flex flex-wrap justify-center space-x-4">
-                <!-- 当前页面链接设置为 active 样式 -->
                 <a href="index.html" class="nav-link text-primary hover:text-blue-800 font-semibold transition duration-150 p-2 rounded-lg bg-primary-light active">
                     <span data-lang-cn="主页" data-lang-en="Home">主页</span>
                 </a>
                 <a href="background.html" class="nav-link text-secondary hover:text-primary font-medium transition duration-150 p-2 rounded-lg hover:bg-gray-100">
-                    <span data-lang-cn="项目背景" data-lang-en="Project Background">项目背景</span>
+                    <span data-lang-cn="传统学术评估规则" data-lang-en="Traditional Research Evaluation Rules">传统学术评估规则</span>
                 </a>
                 <a href="usage_guide.html" class="nav-link text-secondary hover:text-primary font-medium transition duration-150 p-2 rounded-lg hover:bg-gray-100">
-                    <span data-lang-cn="使用指引" data-lang-en="Usage Guide">使用指引</span>
+                    <span data-lang-cn="QuIReC使用指引" data-lang-en="QuIReC Protocol">QuIReC使用指引</span>
                 </a>
                 <a href="hierarchical_calculator.html" class="nav-link text-secondary hover:text-primary font-medium transition duration-150 p-2 rounded-lg hover:bg-gray-100">
-                    <span data-lang-cn="计算器" data-lang-en="Calculator">计算器</span>
+                    <span data-lang-cn="QuIReC计算器" data-lang-en="QuIReC Calculator">QuIReC计算器</span>
                 </a>
             </div>
         </nav>
     </header>
 
-    <!-- 主要内容区域：项目介绍 -->
     <main class="w-full max-w-5xl space-y-8">
         
-        <!-- 核心理念卡片 -->
         <section class="card bg-white p-8 rounded-2xl border-l-4 border-primary">
             <h2 class="text-3xl font-extrabold text-primary mb-4 flex items-center space-x-3">
                 <i data-lucide="scale" class="w-8 h-8"></i>
-                <span data-lang-cn="研究贡献量化法 (QuIReC)" data-lang-en="Quantitative Index of Research Contribution (QuIReC)">研究贡献量化法 (QuIReC)</span>
+                <span data-lang-cn="基于CRediT的研究贡献量化法（QuIReC)" data-lang-en="Quantitative Index of Research Contribution (QuIReC) based on CRediT">基于CRediT的研究贡献量化法（QuIReC)</span>
             </h2>
             <div class="text-secondary space-y-4 leading-relaxed">
-                <p data-lang-cn="QuIReC（Quantitative Index of Research Contribution）是一套旨在解决学术合作中贡献分配争议的量化评估方法。该方法结合了法学中的因果关系判定原则和金融学中的定价原理，将传统的学术评估规则转化为可计算的定量指标。" data-lang-en="QuIReC (Quantitative Index of Research Contribution) is a quantitative assessment method designed to resolve disputes over contribution allocation in academic collaborations. This method integrates causality determination principles from jurisprudence and pricing principles from finance, transforming traditional academic evaluation rules into quantifiable metrics."></p>
-                <p data-lang-cn="在多位合作者共同完成一项研究的背景下，由于人类天然存在的“夸大贡献”倾向，往往导致贡献率总和远超 100%，从而引发难以调和的纠纷。QuIReC 通过引入稀缺性、因果关系定性、以及突破性（成果距离）三大要素，为每项贡献赋予一个客观的档位评分，最终利用 S² 自加权公式（$S_{avg} = (\sum S^2) / (\sum S)$）计算出精确的贡献百分比分配。" data-lang-en="In multi-collaborator research, the natural human tendency to 'exaggerate contribution' often leads to total claimed contributions far exceeding 100%, causing irreconcilable disputes. QuIReC assigns an objective tier score to each contribution based on three main factors: Scarcity, Causality Qualification, and Breakthrough (remoteness). It then uses the S² self-weighted formula ($S_{avg} = (\sum S^2) / (\sum S)$) to calculate a precise percentage distribution of contribution."></p>
-                <p class="font-semibold text-gray-700" data-lang-cn="本网站提供了 QuIReC 的详细背景、使用指引以及一个在线计算器，帮助用户理解和应用这一量化框架。" data-lang-en="This website provides the detailed background, usage guide, and an online calculator for QuIReC, helping users understand and apply this quantitative framework."></p>
+                
+                <p data-lang-cn="QuiReC（IPA: /'kwaɪrɪk/；Quantitative Index of Research Contribution based on CRediT）是一套针对学术合作中贡献分配争议而设计的创新性研究贡献量化法。它基于目前被广泛采用的贡献者角色分类法（<a href='https://www.elsevier.com/authors/policies-and-guidelines/credit-author-statement' target='_blank' class='text-primary underline hover:text-blue-700'>CRediT</a>），能够完全兼容现有的学术论文披露规则，避免产生任何冲突。" data-lang-en="QuiReC (IPA: /'kwaɪrɪk/; Quantitative Index of Research Contribution based on CRediT) is an innovative Quantitative Index of Research Contribution designed to resolve contribution allocation disputes in academic collaborations. It is based on the widely adopted Contributor Roles Taxonomy (<a href='https://www.elsevier.com/authors/policies-and-guidelines/credit-author-statement' target='_blank' class='text-primary underline hover:text-blue-700'>CRediT</a>), and is fully compatible with existing academic publication disclosure rules, avoiding any conflicts.">
+                    QuiReC（IPA: /'kwaɪrɪk/；Quantitative Index of Research Contribution based on CRediT）是一套针对学术合作中贡献分配争议而设计的创新性研究贡献量化法。它基于目前被广泛采用的贡献者角色分类法（<a href="https://www.elsevier.com/authors/policies-and-guidelines/credit-author-statement" target="_blank" class="text-primary underline hover:text-blue-700">CRediT</a>），能够完全兼容现有的学术论文披露规则，避免产生任何冲突。
+                </p>
+
+                <p data-lang-cn="QuIReC于2022年启动开发，并在2025年为应对中国学术合作中日益突出的贡献分配争议及权力失衡问题而进行了重大修正与公开，旨在推动学术评价的透明化。" data-lang-en="Initially developed in 2022, QuIReC underwent major revisions and was publicly released in 2025 to address the growing challenges of contribution allocation disputes and power imbalances in Chinese academic collaboration, with the aim of promoting transparency in academic evaluation.">
+                    QuIReC于2022年启动开发，并在2025年为应对中国学术合作中日益突出的贡献分配争议及权力失衡问题而进行了重大修正与公开，旨在推动学术评价的透明化。
+                </p>
+                
+                <p data-lang-cn="现有研究指出，由于合作者天然存在的“夸大贡献”倾向，自我评估的贡献总和通常会达到200%至300%，极易引发难以调和的纠纷。QuIReC通过结合法学中的因果关系判定原则和金融学中的定价原理，将传统的学术评估规则转化为可计算的定量指标，从而为每位参与者计算出贡献百分比分配。" data-lang-en="Existing research indicates that due to collaborators' natural tendency to 'exaggerate contribution,' the total self-assessed contribution often reaches 200% to 300%, easily leading to irreconcilable disputes. QuIReC integrates causality determination principles from jurisprudence and pricing principles from finance, transforming traditional research evaluation rules into quantitative metrics, thereby providing a contribution percentage for each participant.">
+                    现有研究指出，由于合作者天然存在的“夸大贡献”倾向，自我评估的贡献总和通常会达到200%至300%，极易引发难以调和的纠纷。QuIReC通过结合法学中的因果关系判定原则和金融学中的定价原理，将传统的学术评估规则转化为可计算的定量指标，从而为每位参与者计算出贡献百分比分配。
+                </p>
+                
+                <p class="font-semibold text-gray-700" data-lang-cn="本网站介绍了以CRediT为核心的传统学术评估规则的传承与演化，提供了QuIReC使用指引以及一个在线QuIReC计算器，旨在帮助用户理解并应用这一量化框架。" data-lang-en="This website introduces the heritage and evolution of traditional research evaluation rules with CRediT as the core, provides the QuIReC protocol, and an online QuIReC calculator, designed to help users understand and apply this quantitative framework.">
+                    本网站介绍了以CRediT为核心的传统学术评估规则的传承与演化，提供了QuIReC使用指引以及一个在线QuIReC计算器，旨在帮助用户理解并应用这一量化框架。
+                </p>
             </div>
         </section>
 
-        <!-- 关键组件链接卡片 -->
         <section class="card bg-white p-8 rounded-2xl border-l-4 border-secondary/50">
             <h3 class="text-2xl font-bold text-secondary mb-6" data-lang-cn="快速浏览关键内容" data-lang-en="Quick Access to Key Content">快速浏览关键内容</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
-                <!-- 链接 1: 背景 -->
                 <a href="background.html" class="p-5 bg-primary-light hover:bg-blue-200 rounded-xl shadow-md transition duration-200 flex flex-col items-center text-center">
                     <i data-lucide="graduation-cap" class="w-10 h-10 text-primary mb-2"></i>
-                    <span class="text-lg font-bold text-primary" data-lang-cn="项目背景" data-lang-en="Project Background">项目背景</span>
-                    <p class="text-sm text-gray-600 mt-1" data-lang-cn="了解 QuIReC 的起源和制度根基。" data-lang-en="Understand the origins and institutional foundation of QuIReC."></p>
+                    <span class="text-lg font-bold text-primary" data-lang-cn="传统学术评估规则" data-lang-en="Traditional Research Evaluation Rules">传统学术评估规则</span>
+                    <p class="text-sm text-gray-600 mt-1" data-lang-cn="了解以CRediT为核心的传统学术评估规则的传承与演化。" data-lang-en="Understand the heritage and evolution of traditional research evaluation rules with CRediT as the core.">了解以CRediT为核心的传统学术评估规则的传承与演化。</p>
                 </a>
 
-                <!-- 链接 2: 指引 -->
                 <a href="usage_guide.html" class="p-5 bg-primary-light hover:bg-blue-200 rounded-xl shadow-md transition duration-200 flex flex-col items-center text-center">
                     <i data-lucide="notebook-text" class="w-10 h-10 text-primary mb-2"></i>
-                    <span class="text-lg font-bold text-primary" data-lang-cn="使用指引" data-lang-en="Usage Guide">使用指引</span>
-                    <p class="text-sm text-gray-600 mt-1" data-lang-cn="详细了解五大要素和六档判定的规则。" data-lang-en="Detailed rules for the five factors and six-tier assessment."></p>
+                    <span class="text-lg font-bold text-primary" data-lang-cn="QuIReC使用指引" data-lang-en="QuIReC Protocol">QuIReC使用指引</span>
+                    <p class="text-sm text-gray-600 mt-1" data-lang-cn="详细了解五大要素和六档判定的规则。" data-lang-en="Detailed rules for the five major factors and six-tier assessment.">详细了解五大要素和六档判定的规则。</p>
                 </a>
                 
-                <!-- 链接 3: 计算器 -->
                 <a href="hierarchical_calculator.html" class="p-5 bg-primary-light hover:bg-blue-200 rounded-xl shadow-md transition duration-200 flex flex-col items-center text-center">
                     <i data-lucide="calculator" class="w-10 h-10 text-primary mb-2"></i>
-                    <span class="text-lg font-bold text-primary" data-lang-cn="计算器" data-lang-en="Calculator">计算器</span>
-                    <p class="text-sm text-gray-600 mt-1" data-lang-cn="输入档位，计算最终贡献百分比。" data-lang-en="Input tiers to calculate the final contribution percentage."></p>
+                    <span class="text-lg font-bold text-primary" data-lang-cn="QuIReC计算器" data-lang-en="QuIReC Calculator">QuIReC计算器</span>
+                    <p class="text-sm text-gray-600 mt-1" data-lang-cn="输入档位，计算最终贡献百分比。" data-lang-en="Input assessment tiers to calculate the final contribution percentage.">输入档位，计算最终贡献百分比。</p>
                 </a>
             </div>
         </section>
 
     </main>
 
-    <!-- 页脚 -->
     <footer class="mt-16 w-full max-w-5xl border-t pt-8 text-center text-secondary text-sm">
         <p data-lang-cn="&copy; 2025 QuIReC. All rights reserved. Thanks for the assist and support by the Google Gemini large language model for the development of this website." data-lang-en="&copy; 2025 QuIReC. All rights reserved. Thanks for the assist and support by the Google Gemini large language model for the development of this website.">&copy; 2025 QuIReC. All rights reserved. Thanks for the assist and support by the Google Gemini large language model for the development of this website.</p>
     </footer>
 
-    <!-- JavaScript for Language Toggle Logic and Nav Highlighting -->
     <script>
         let currentLang = 'cn';
         
@@ -140,7 +139,8 @@
                     if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                         // Handle input value/text
                     } else {
-                        element.textContent = lang === 'cn' ? cnText : enText;
+                        // 使用 innerHTML 确保包含 HTML 链接的段落也能正确切换文本。
+                        element.innerHTML = lang === 'cn' ? cnText : enText;
                     }
                 }
 
