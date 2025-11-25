@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-key="title">研究贡献量化法计算器</title>
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom styles for academic aesthetic and responsiveness */
@@ -51,38 +50,47 @@
 </head>
 <body class="p-4 sm:p-8">
     <div class="container mx-auto max-w-7xl">
-        <!-- Language Selector -->
         <div class="flex justify-end mb-4">
             <select id="language-selector" class="rounded-md border border-gray-300 p-2 text-sm shadow-sm focus:ring-primary focus:border-primary">
                 <option value="zh">中文 (Chinese)</option>
-                <option value="en">English</option>
+                <option value="en">English (中文)</option>
             </select>
         </div>
 
-        <!-- Header -->
         <header class="text-center py-6 mb-8 bg-white rounded-xl shadow-lg border-t-4 border-primary">
             <h1 class="text-4xl font-bold text-secondary mb-2" data-key="header_title">研究贡献量化法计算器</h1>
-            <p class="text-lg text-gray-500" data-key="header_subtitle">多层级组织自加权贡献分配模型（V4.0 - $S^2$ 平均法）</p>
+            <p class="text-lg text-gray-500" data-key="header_subtitle">自加权贡献分配模型（V5.0 - CRediT三因素分档法）</p>
         </header>
 
-        <!-- Main Content Grid -->
         <div class="grid grid-cols-1 lg:cols-3 gap-8">
 
-            <!-- Calculator Inputs -->
             <section class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
-                <h2 class="text-2xl font-semibold text-primary mb-4 border-b pb-2" data-key="section_input_title">1. 定义组织层级与贡献因子</h2>
-                <p class="text-sm text-red-500 mb-4" data-key="note_weight_removed">注意：该版本使用分数自加权平均（$\frac{\sum S^2}{\sum S}$），故无需手动设置权重。</p>
+                <h2 class="text-2xl font-semibold text-primary mb-4 border-b pb-2" data-key="section_input_title">1. 输入参与者姓名与三因素档位</h2>
+                
+                <div class="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <p class="font-bold text-secondary mb-2" data-key="mode_label">计算模式 / Calculation Mode:</p>
+                    <div class="flex space-x-6">
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="radio" name="calcMode" value="multiply" checked onchange="updateCalculationMode('multiply')" class="form-radio text-primary h-5 w-5">
+                            <span class="ml-2 text-gray-800" data-key="mode_multiply">相乘 (S × C × B) </span>
+                        </label>
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="radio" name="calcMode" value="add" onchange="updateCalculationMode('add')" class="form-radio text-primary h-5 w-5">
+                            <span class="ml-2 text-gray-800" data-key="mode_add">累加 (S + C + B)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <p class="text-sm text-red-500 mb-4" data-key="note_weight_removed">注意：务必确保参与者的姓名一致，否则汇总时会分开输出</p>
                 
                 <div id="largeOrgContainer" class="space-y-6">
-                    <!-- Large Organizations will be rendered here -->
-                </div>
+                    </div>
 
                 <button onclick="addLargeOrganization()" class="w-full mt-6 py-2 px-4 border border-primary rounded-md shadow-sm text-primary font-medium bg-white hover:bg-blue-50 transition duration-150 transform hover:scale-[1.005]" data-key="button_add_large_org">
                     + 添加大贡献项
                 </button>
             </section>
 
-            <!-- Results & Control -->
             <section class="lg:col-span-1 bg-white p-6 rounded-xl shadow-lg flex flex-col h-fit sticky-top-section">
                 <h2 class="text-2xl font-semibold text-primary mb-4 border-b pb-2" data-key="section_output_title">2. 计算与结果</h2>
 
@@ -90,22 +98,23 @@
                     计算最终贡献比例
                 </button>
                 
-                <!-- Error Message -->
                 <div id="errorBox" class="mt-4 p-3 rounded-md bg-red-100 text-red-700 border border-red-300 hidden" data-key="error_message_validation">
-                    请确保至少有两个大贡献项，且所有组织的档位均已计算完成，且总档位不为零。
+                    请确保至少有两个大贡献项，且所有档位均不为零。
                 </div>
                 
-                <!-- Result Display -->
                 <div id="resultsContainer" class="mt-6 p-4 rounded-lg bg-gray-100 border-l-4 border-primary shadow-inner transition duration-300 ease-in-out hidden">
-                    <p class="text-lg font-semibold text-secondary mb-2" data-key="result_header_org">大贡献项相对平均档位比例:</p>
+                    
+                    <p class="text-lg font-semibold text-secondary mb-2" data-key="result_header_org">1. 大贡献项相对平均档位比例:</p>
                     <div id="largeOrgResults" class="space-y-2 mb-4">
-                        <!-- Large Org Ratios displayed here -->
-                    </div>
+                        </div>
 
-                    <p class="text-lg font-semibold text-secondary mb-2 mt-4 border-t pt-2" data-key="result_header_participant">最终参与者贡献比例:</p>
+                    <p class="text-lg font-semibold text-secondary mb-2 mt-4 border-t pt-2" data-key="result_header_participant">2. 最终参与者贡献比例 (明细):</p>
                     <div id="participantResults" class="space-y-2">
-                        <!-- Participant Ratios displayed here -->
-                    </div>
+                        </div>
+
+                    <p class="text-lg font-semibold text-secondary mb-2 mt-6 border-t-2 border-primary pt-2 bg-blue-50 p-1 rounded" data-key="result_header_aggregated">3. 最终参与者贡献比例汇总:</p>
+                    <div id="participantAggregatedResults" class="space-y-2">
+                        </div>
                 </div>
 
             </section>
@@ -120,9 +129,10 @@
         let nextParticipantId = 1000;
         let nextSmallOrgId = 100;
         let nextLargeOrgId = 1;
+        let calculationMode = 'multiply'; // Default mode: 'multiply' or 'add'
 
-        // V6: The specific hierarchical structure requested by the user
-        const defaultHierarchyStructure = {
+        // 中文版默认结构: 中文 (English)
+        const hierarchyStructureZH = {
             "组织 (Organization)": [
                 "数据管理 (Data Curation)",
                 "写作 - 初稿 (Writing - Original Draft)",
@@ -148,27 +158,61 @@
             ],
             "外部支持 (External Support)": [
                 "资金获取 (Funding acquisition)",
-                "资金来源 (Funding)"
+                "资金来源 (Funding)",
+                "资源提供 (Resources)"
+            ]
+        };
+
+        // 英文版默认结构: English (中文)
+        const hierarchyStructureEN = {
+            "Organization (组织)": [
+                "Data Curation (数据管理)",
+                "Writing - Original Draft (写作 - 初稿)",
+                "Writing - Review & Editing (写作 - 审阅和编辑)",
+                "Supervision (监督，指导和管理)",
+                "Project administration (项目管理)"
+            ],
+            "Technology (技术)": [
+                "Visualization (可视化)",
+                "Formal analysis (形式分析)",
+                "Validation (确认)",
+                "Software (软件)",
+                "Investigation (调查研究)",
+                "Technical References (技术类引文)"
+            ],
+            "Labor (劳动)": [
+                "Investigation (调查研究)"
+            ],
+            "Innovation (创新)": [
+                "Conceptualization (概念化)",
+                "Methodology (方法论)",
+                "Innovation References (创新类引文)"
+            ],
+            "External Support (外部支持)": [
+                "Funding acquisition (资金获取)",
+                "Funding (资金来源)",
+                "Resources (资源提供)"
             ]
         };
 
 
         const translations = {
             zh: {
-                title: "分级贡献指数 (HCI) 计算器",
-                header_title: "分级贡献指数 (HCI) 计算器",
-                header_subtitle: "多层级组织自加权贡献分配模型（V4.0 - $\\text{S}^2$ 平均法）",
-                section_input_title: "1. 定义组织层级与贡献因子",
+                title: "研究贡献量化法 (QuIReC) 计算器",
+                header_title: "研究贡献量化法 (QuIReC) 计算器",
+                header_subtitle: "自加权贡献分配模型（V5.0 - CRediT三因素分档法）",
+                section_input_title: "1. 输入参与者姓名与三因素档位",
                 section_output_title: "2. 计算与结果",
                 button_add_large_org: "+ 添加大贡献项",
                 button_calculate: "计算最终贡献比例",
                 error_message_validation: "请确保至少有两个大贡献项，且所有组织的档位均已计算完成，且总档位不为零。",
-                result_header_org: "大贡献项相对平均档位比例:",
-                result_header_participant: "最终参与者贡献比例:",
-                note_weight_removed: "注意：该版本使用分数自加权平均（$\\frac{\\sum \\text{S}^2}{\\sum \\text{S}}$），故无需手动设置权重。",
+                result_header_org: "1. 大贡献项相对平均档位比例:",
+                result_header_participant: "2. 最终参与者贡献比例 (明细):",
+                result_header_aggregated: "3. 最终参与者贡献比例汇总:",
+                note_weight_removed: "注意：务必确保参与者的姓名一致，否则汇总时会分开输出",
                 
-                large_org_name_placeholder: "大贡献项名称 (例如: 课题组A)",
-                small_org_name_placeholder: "小贡献项名称 (例如: 实验小组)",
+                large_org_name_placeholder: "大贡献项名称 (例如: 组织)",
+                small_org_name_placeholder: "小贡献项名称 (例如: 数据管理)",
                 participant_name_placeholder: "参与者姓名 (例如: 张三)",
                 
                 button_add_small_org: "+ 添加小贡献项",
@@ -187,31 +231,38 @@
                 tier_6: "六档 (6分)",
                 placeholder_select: "请选择分档 (1-6)",
 
-                // V4 Keys
                 large_org_score_label: "大贡献项平均档位:",
                 small_org_score_label: "小贡献项平均档位:",
-                button_calculate_small_org: "计算小贡献项档位 ($\frac{\\sum \\text{S}^2}{\\sum \\text{S}}$)",
-                button_calculate_large_org: "计算大贡献项档位 ($\frac{\\sum \\text{S}^2}{\\sum \\text{S}}$)",
-                invalid_input: "输入不完整或总分/总平均分为零",
+                button_calculate_small_org: "计算小贡献项档位",
+                button_calculate_large_org: "计算大贡献项档位",
+                invalid_input: "输入不完整或总档位为零",
+
+                mode_label: "计算模式:",
+                mode_multiply: "相乘 (S × C × B) ",
+                mode_add: "累加 (S + C + B)",
             },
             en: {
-                title: "Hierarchical Contribution Index (HCI) Calculator",
-                header_title: "Hierarchical Contribution Index (HCI) Calculator",
-                header_subtitle: "Multi-Level Self-Weighted Contribution Allocation Model (V4.0 - $\\text{S}^2$ Average)",
-                section_input_title: "1. Define Organizational Hierarchy & Contribution Factors",
+                // Corrected English Translations & Formats
+                title: "QuIReC Calculator",
+                header_title: "QuIReC Calculator",
+                header_subtitle: "Self-Weighted Contribution Allocation Model (V5.0 - CRediT Three-Factor Tiering Method)",
+                section_input_title: "1. Input Participants and Three-Factor Tiers",
                 section_output_title: "2. Calculation and Results",
-                button_add_large_org: "+ Add Large Organization",
-                button_calculate: "Calculate Final Contribution Ratios",
-                error_message_validation: "Please ensure there are at least two Large Organizations, and all organization scores are calculated and the grand total score is not zero.",
-                result_header_org: "Large Org Relative Average Tier Ratio:",
-                result_header_participant: "Final Participant Contribution Ratios:",
-                note_weight_removed: "Note: This version uses the Score-Squared Weighted Average ($\\frac{\\sum \\text{S}^2}{\\sum \\text{S}}$), so manual weights are not required.",
-
-                large_org_name_placeholder: "Large Org Name (e.g., Lab Group A)",
-                small_org_name_placeholder: "Small Org Name (e.g., Experiment Team)",
-                participant_name_placeholder: "Participant Name (e.g., Jane Doe)",
+                button_add_large_org: "+ Add Major Contribution Role",
+                button_calculate: "Calculate Final Ratios",
+                error_message_validation: "Please ensure at least two Major Roles exist, all Tiers are not zero.",
+                result_header_org: "1. Major Role Relative Average Tier Ratio:",
+                result_header_participant: "2. Participant Contribution Ratios (Detail):",
+                result_header_aggregated: "3. Total Aggregated Contribution Summary:",
                 
-                button_add_small_org: "+ Add Small Organization",
+                note_weight_removed: "Note: Please ensure participant names are consistent; otherwise, they will be listed separately in the summary.",
+
+                // Format: English (Chinese) for dynamic addition placeholders
+                large_org_name_placeholder: "Major Role (大贡献项)", 
+                small_org_name_placeholder: "Minor Role (小贡献项)", 
+                participant_name_placeholder: "Participant (参与者)",
+                
+                button_add_small_org: "+ Add Minor Role",
                 button_add_participant: "+ Add Participant",
                 button_remove: "Remove",
 
@@ -227,18 +278,33 @@
                 tier_6: "Tier 6 (6pt)",
                 placeholder_select: "Select Tier (1-6)",
 
-                // V4 Keys
-                large_org_score_label: "Large Org Average Tier:",
-                small_org_score_label: "Small Org Average Tier:",
-                button_calculate_small_org: "Calculate Small Org Tier ($\frac{\\sum \\text{S}^2}{\\sum \\text{S}}$)",
-                button_calculate_large_org: "Calculate Large Org Tier ($\frac{\\sum \\text{S}^2}{\\sum \\text{S}}$)",
-                invalid_input: "Incomplete input or zero total/average score",
+                large_org_score_label: "Major Role Avg Tier:",
+                small_org_score_label: "Minor Role Avg Tier:",
+                button_calculate_small_org: "Calc Minor Role Tier",
+                button_calculate_large_org: "Calc Major Role Tier",
+                invalid_input: "Incomplete input or zero tier",
+
+                mode_label: "Calculation Mode:",
+                mode_multiply: "Multiply (S × C × B)",
+                mode_add: "Add (S + C + B)",
             }
         };
 
         function getLang() {
             return document.getElementById('language-selector')?.value || 'zh';
         }
+
+        /**
+         * Per user request, this function now always returns the full stored name, 
+         * including the language translation in parentheses (e.g., "Organization (组织)").
+         * @param {string} name - The stored name (e.g., "Organization (组织)").
+         * @param {string} lang - The current language ('zh' or 'en').
+         * @returns {string} The displayable name (always the full stored name).
+         */
+        function getDisplayableName(name, lang) {
+            return name;
+        }
+
 
         function getTierOptions() {
             const keys = translations[getLang()];
@@ -251,6 +317,15 @@
                 { value: 5, text: keys.tier_5 },
                 { value: 6, text: keys.tier_6 },
             ];
+        }
+        
+        // --- Mode Update Function ---
+        function updateCalculationMode(mode) {
+            calculationMode = mode;
+            // Clear current results display to avoid confusion
+            document.getElementById('resultsContainer').classList.add('hidden');
+            // Re-render hierarchy to update "Raw Score" displays
+            renderHierarchy();
         }
 
         function createParticipantHtml(orgId, subOrgId, participant) {
@@ -276,8 +351,7 @@
                             class="font-medium text-secondary text-sm w-1/3 p-1 rounded-md border-gray-300 border focus:ring-primary focus:border-primary">
                         
                         <div class="flex items-center space-x-2 text-xs text-gray-500">
-                            <!-- Raw Score (For Display/Reference) -->
-                            <span class="mr-4">总分 $\\text{S}_p$: ${getParticipantRawScore(participant)}</span>
+                            <span class="mr-4">档位（Tiers）: <strong>${getParticipantRawScore(participant)}</strong></span>
                         </div>
 
                         <div class="flex space-x-2">
@@ -298,6 +372,7 @@
 
         function createSmallOrgHtml(orgId, subOrg) {
             const keys = translations[getLang()];
+            const lang = getLang(); // Get current language
             
             // Generate HTML for all participants in this small org
             const participantsHtml = subOrg.participants.map(p => createParticipantHtml(orgId, subOrg.id, p)).join('');
@@ -305,17 +380,17 @@
             // Determine initial score display based on existing data
             const scoreHtml = subOrg.weightedAverageScore > 0 
                 ? `<span class="text-sm font-semibold text-emerald-700">${keys.small_org_score_label} ${subOrg.weightedAverageScore.toFixed(2)}</span>`
-                : `<span class="text-gray-500 text-sm italic">(${keys.small_org_score_label} 待计算)</span>`;
+                : `<span class="text-gray-500 text-sm italic">(${keys.small_org_score_label} --)</span>`;
 
             return `
                 <div id="sub-org-${subOrg.id}" class="sub-org-card p-4 bg-gray-50 rounded-xl shadow-md mb-4 ml-4">
                     <div class="flex items-center justify-between mb-3">
-                        <input type="text" value="${subOrg.name}" 
+                        <input type="text" value="${getDisplayableName(subOrg.name, lang)}" 
                             oninput="updateSmallOrgData(${orgId}, ${subOrg.id}, 'name', this.value)"
                             placeholder="${keys.small_org_name_placeholder}" 
                             class="font-semibold text-lg text-emerald-700 w-1/3 p-1 rounded-md border-gray-300 border focus:ring-primary focus:border-primary">
                         
-                        <span class="text-sm text-gray-600 italic">自加权模式</span>
+                        <span class="text-sm text-gray-600 italic"></span>
 
                         <button onclick="removeSmallOrganization(${orgId}, ${subOrg.id})" class="text-red-500 hover:text-red-700 text-sm font-semibold p-1">
                             ${keys.button_remove}
@@ -328,7 +403,7 @@
                     
                     <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-200">
                         <button onclick="addParticipant(${orgId}, ${subOrg.id})" class="py-1 px-3 border border-dashed border-amber-500 rounded-md text-amber-600 text-sm hover:bg-amber-50 transition duration-150" data-key="button_add_participant">
-                            + ${keys.button_add_participant}
+                            ${keys.button_add_participant}
                         </button>
                         <button onclick="calculateSmallOrgScore(${orgId}, ${subOrg.id})" class="py-1 px-3 bg-emerald-500 text-white text-sm rounded-md shadow hover:bg-emerald-600 transition duration-150" data-key="button_calculate_small_org">
                             ${keys.button_calculate_small_org}
@@ -343,6 +418,7 @@
 
         function createLargeOrgHtml(org) {
             const keys = translations[getLang()];
+            const lang = getLang(); // Get current language
             
             // Generate HTML for all small organizations in this large org
             const smallOrgsHtml = org.smallOrgs.map(subOrg => createSmallOrgHtml(org.id, subOrg)).join('');
@@ -350,12 +426,12 @@
             // Determine initial score display based on existing data
             const scoreHtml = org.weightedAverageScore > 0 
                 ? `<span class="text-base font-bold text-blue-700">${keys.large_org_score_label} ${org.weightedAverageScore.toFixed(2)}</span>`
-                : `<span class="text-gray-500 text-base italic">(${keys.large_org_score_label} 待计算)</span>`;
+                : `<span class="text-gray-500 text-base italic">(${keys.large_org_score_label} --)</span>`;
 
             return `
                 <div id="large-org-${org.id}" class="org-card p-6 bg-primary-light rounded-xl shadow-xl mb-6">
                     <div class="flex items-center justify-between mb-4 pb-2 border-b border-blue-300">
-                        <input type="text" value="${org.name}" 
+                        <input type="text" value="${getDisplayableName(org.name, lang)}" 
                             oninput="updateLargeOrgData(${org.id}, 'name', this.value)"
                             placeholder="${keys.large_org_name_placeholder}" 
                             class="font-bold text-xl text-blue-700 w-2/3 p-1 rounded-md border-gray-300 border focus:ring-primary focus:border-primary">
@@ -371,7 +447,7 @@
 
                     <div class="flex justify-between items-center mt-4 pt-4 border-t border-blue-300">
                         <button onclick="addSmallOrganization(${org.id})" class="py-2 px-4 border border-dashed border-emerald-500 rounded-md text-emerald-600 font-medium hover:bg-emerald-50 transition duration-150" data-key="button_add_small_org">
-                            + ${keys.button_add_small_org}
+                            ${keys.button_add_small_org}
                         </button>
                         <button onclick="calculateLargeOrgScore(${org.id})" class="py-2 px-4 bg-blue-500 text-white font-medium rounded-md shadow hover:bg-blue-600 transition duration-150" data-key="button_calculate_large_org">
                             ${keys.button_calculate_large_org}
@@ -392,19 +468,24 @@
         // --- CRUD Functions ---
 
         /**
-         * Adds a new large organization, optionally overriding the default name and providing small organizations.
-         * @param {string | undefined} nameOverride - Custom name for the organization.
-         * @param {string[] | undefined} smallOrgNames - Array of small organization names to add immediately.
+         * Adds a new large organization.
          */
         function addLargeOrganization(nameOverride, smallOrgNames) {
             const keys = translations[getLang()];
             const newId = nextLargeOrgId++;
-            // Use nameOverride if provided, otherwise generate a generic default name
-            const defaultName = `${keys.large_org_name_placeholder.split('(')[0].trim()} ${String.fromCharCode(64 + newId)}`;
+            
+            // Use the base text of the placeholder for naming new items
+            const baseName = keys.large_org_name_placeholder.includes('(') 
+                ? keys.large_org_name_placeholder.split('(')[0].trim() 
+                : keys.large_org_name_placeholder.split(' ')[0].trim();
+            const defaultName = `${baseName} ${String.fromCharCode(64 + newId)}`;
+
 
             const newOrg = {
                 id: newId,
-                name: nameOverride || defaultName, // Use override or default
+                // If nameOverride exists (initial load), use the full formatted name.
+                // If not (dynamic addition), use the dynamic name which is already pure.
+                name: nameOverride || defaultName, 
                 weightedAverageScore: 0, 
                 smallOrgs: []
             };
@@ -413,13 +494,11 @@
             if (smallOrgNames && smallOrgNames.length > 0) {
                 // Bulk add for initial setup
                 smallOrgNames.forEach(smallOrgName => {
-                    // Pass false to suppress participant addition and rendering
                     addSmallOrganization(newId, smallOrgName, false); 
                 });
-                renderHierarchy(); // Render once after bulk initialization
+                renderHierarchy(); 
             } else {
-                // Manual button click, add one generic small org with one participant.
-                // addSmallOrganization will add a participant AND call renderHierarchy
+                // Manual button click
                 addSmallOrganization(newId); 
             }
         }
@@ -433,38 +512,34 @@
         function updateLargeOrgData(id, key, value) {
             const org = largeOrgs.find(o => o.id === id);
             if (org) { org[key] = value; }
+            if (key === 'name') return;
+            renderHierarchy();
         }
 
-        /**
-         * Adds a new small organization.
-         * @param {number} orgId - ID of the parent large org.
-         * @param {string} [nameOverride] - Optional custom name.
-         * @param {boolean} [addParticipantFlag=true] - Whether to auto-add a participant.
-         * @returns {void}
-         */
         function addSmallOrganization(orgId, nameOverride, addParticipantFlag = true) {
             const org = largeOrgs.find(o => o.id === orgId);
             if (!org) return;
 
             const keys = translations[getLang()];
             const newId = nextSmallOrgId++;
-            const defaultName = `${keys.small_org_name_placeholder.split('(')[0].trim()} ${newId % 10}`;
+            
+            const baseName = keys.small_org_name_placeholder.includes('(') 
+                ? keys.small_org_name_placeholder.split('(')[0].trim() 
+                : keys.small_org_name_placeholder.split(' ')[0].trim();
+            const defaultName = `${baseName} ${newId % 10}`;
 
             const newSubOrg = {
                 id: newId,
-                name: nameOverride || defaultName, // Use override or default
+                name: nameOverride || defaultName, 
                 weightedAverageScore: 0, 
                 participants: []
             };
             org.smallOrgs.push(newSubOrg);
             
-            // Only add a participant if the flag is true (default for manual addition)
             if (addParticipantFlag) {
                 addParticipant(orgId, newId);
-                // If a participant is added, it needs rendering
                 renderHierarchy(); 
             }
-            // If no participant added, caller (e.g., addLargeOrganization) is responsible for render.
         }
 
         function removeSmallOrganization(orgId, subOrgId) {
@@ -480,6 +555,8 @@
             const org = largeOrgs.find(o => o.id === orgId);
             const subOrg = org?.smallOrgs.find(s => s.id === subOrgId);
             if (subOrg) { subOrg[key] = value; }
+            if (key === 'name') return;
+            renderHierarchy();
         }
 
         function addParticipant(orgId, subOrgId) {
@@ -489,9 +566,15 @@
 
             const keys = translations[getLang()];
             const newId = nextParticipantId++;
+            
+            const baseName = keys.participant_name_placeholder.includes('(') 
+                ? keys.participant_name_placeholder.split('(')[0].trim() 
+                : keys.participant_name_placeholder.split(' ')[0].trim();
+            const defaultName = `${baseName} ${newId % 100}`;
+            
             const newParticipant = {
                 id: newId,
-                name: `${keys.participant_name_placeholder.split('(')[0].trim()} ${newId % 100}`,
+                name: defaultName,
                 scarcity: 0, 
                 causality: 0, 
                 breakthrough: 0
@@ -517,44 +600,30 @@
             if (participant) {
                 if (key === 'name') {
                     participant[key] = value;
+                    return; 
                 } else {
                     participant[key] = parseInt(value);
                 }
             }
-            // Re-render the whole hierarchy to update all scores
             renderHierarchy(); 
         }
 
         // --- Calculation Helpers ---
 
-        /**
-         * Calculates a single participant's raw score: S_p = F_S + F_C + F_B
-         * @param {object} p - Participant object.
-         * @returns {number} The raw score.
-         */
         function getParticipantRawScore(p) {
-            // Note: Factors are 1-6, so max raw score is 18.
-            return p.scarcity + p.causality + p.breakthrough;
+            if (calculationMode === 'multiply') {
+                return p.scarcity * p.causality * p.breakthrough;
+            } else {
+                return p.scarcity + p.causality + p.breakthrough;
+            }
         }
 
-        /**
-         * Calculates a single participant's squared contribution: S_p^2 = (F_S + F_C + F_B)^2.
-         * This is used as the numerator's term in the S^2 average formula.
-         * @param {object} p - Participant object.
-         * @returns {number} The squared score.
-         */
         function getParticipantSquaredContribution(p) {
             const rawScore = getParticipantRawScore(p);
             return rawScore * rawScore; 
         }
 
-        /**
-         * Checks if a participant has valid, non-zero factor scores.
-         * @param {object} p - Participant object.
-         * @returns {boolean} True if input is complete (raw score > 0).
-         */
         function isParticipantInputValid(p) {
-             // For a tier to be valid, all three factors must be > 0 (1-6 range)
              return p.scarcity > 0 && p.causality > 0 && p.breakthrough > 0;
         }
 
@@ -568,32 +637,32 @@
 
             if (!smallOrg || !scoreDisplay) return 0;
 
-            let sumOfSquaredScores = 0; // SUM( S_p^2 ) - Numerator
-            let sumOfRawScores = 0;     // SUM( S_p ) - Denominator
+            let sumOfSquaredScores = 0; // Numerator
+            let sumOfRawScores = 0;     // Denominator
 
-            // Validation: Check for invalid input among all participants (any factor score is 0)
             const hasInvalidInput = smallOrg.participants.some(p => !isParticipantInputValid(p));
 
             if (smallOrg.participants.length === 0 || hasInvalidInput) {
                 smallOrg.weightedAverageScore = 0;
-                scoreDisplay.innerHTML = `<span class="text-red-500 text-sm">${keys.small_org_score_label} 0.00 (${keys.invalid_input})</span>`;
+                // Use only the label base for error messages
+                scoreDisplay.innerHTML = `<span class="text-red-500 text-sm">${keys.small_org_score_label.split(':')[0]} 0.00 (${keys.invalid_input})</span>`;
                 return 0;
             }
 
             for (const p of smallOrg.participants) {
                 const rawScore = getParticipantRawScore(p);
-                sumOfSquaredScores += rawScore * rawScore; // S_p^2
-                sumOfRawScores += rawScore;             // S_p
+                sumOfSquaredScores += rawScore * rawScore; 
+                sumOfRawScores += rawScore;           
             }
             
             if (sumOfRawScores === 0) {
                 smallOrg.weightedAverageScore = 0;
-                scoreDisplay.innerHTML = `<span class="text-red-500 text-sm">${keys.small_org_score_label} 0.00 (${keys.invalid_input})</span>`;
+                // Use only the label base for error messages
+                scoreDisplay.innerHTML = `<span class="text-red-500 text-sm">${keys.small_org_score_label.split(':')[0]} 0.00 (${keys.invalid_input})</span>`;
                 return 0;
             }
 
             const smallOrgWeightedAverage = sumOfSquaredScores / sumOfRawScores;
-            
             smallOrg.weightedAverageScore = smallOrgWeightedAverage;
             
             scoreDisplay.innerHTML = `<span class="text-sm font-semibold text-emerald-700">${keys.small_org_score_label} ${smallOrgWeightedAverage.toFixed(2)}</span>`;
@@ -607,39 +676,37 @@
 
             if (!largeOrg || !scoreDisplay) return 0;
 
-            let sumOfSquaredAverages = 0; // SUM( S_sub^2 ) - Numerator
-            let sumOfAverages = 0;        // SUM( S_sub ) - Denominator
+            let sumOfSquaredAverages = 0;
+            let sumOfAverages = 0;       
             let allSmallOrgsValid = true;
 
             if (largeOrg.smallOrgs.length === 0) {
                  largeOrg.weightedAverageScore = 0;
-                scoreDisplay.innerHTML = `<span class="text-red-500 text-base">${keys.large_org_score_label} 0.00 (${keys.invalid_input})</span>`;
+                 // Use only the label base for error messages
+                scoreDisplay.innerHTML = `<span class="text-red-500 text-base">${keys.large_org_score_label.split(':')[0]} 0.00 (${keys.invalid_input})</span>`;
                 return 0;
             }
             
             for (const smallOrg of largeOrg.smallOrgs) {
-                // Get the Small Org's calculated average score
                 const smallOrgAverageScore = calculateSmallOrgScore(orgId, smallOrg.id); 
                 
-                // If any child score is zero (invalid input at participant level), the large org is invalid
                 if (smallOrgAverageScore === 0) {
                     allSmallOrgsValid = false;
                     break;
                 }
                 
-                // Self-Weighted Sum: S_sub_avg * S_sub_avg
-                sumOfSquaredAverages += smallOrgAverageScore * smallOrgAverageScore; // S_sub^2
-                sumOfAverages += smallOrgAverageScore;                             // S_sub
+                sumOfSquaredAverages += smallOrgAverageScore * smallOrgAverageScore;
+                sumOfAverages += smallOrgAverageScore;                            
             }
             
             if (!allSmallOrgsValid || sumOfAverages === 0) {
                 largeOrg.weightedAverageScore = 0;
-                scoreDisplay.innerHTML = `<span class="text-red-500 text-base">${keys.large_org_score_label} 0.00 (${keys.invalid_input})</span>`;
+                // Use only the label base for error messages
+                scoreDisplay.innerHTML = `<span class="text-red-500 text-base">${keys.large_org_score_label.split(':')[0]} 0.00 (${keys.invalid_input})</span>`;
                 return 0;
             }
 
             const largeOrgWeightedAverage = sumOfSquaredAverages / sumOfAverages;
-            
             largeOrg.weightedAverageScore = largeOrgWeightedAverage;
             
             scoreDisplay.innerHTML = `<span class="text-base font-bold text-blue-700">${keys.large_org_score_label} ${largeOrgWeightedAverage.toFixed(2)}</span>`;
@@ -652,6 +719,7 @@
             const resultsContainer = document.getElementById('resultsContainer');
             const largeOrgResults = document.getElementById('largeOrgResults');
             const participantResults = document.getElementById('participantResults');
+            const participantAggregatedResults = document.getElementById('participantAggregatedResults');
             const errorBox = document.getElementById('errorBox');
             const keys = translations[getLang()];
             
@@ -661,7 +729,7 @@
             let isValid = largeOrgs.length >= 2;
 
             for (const largeOrg of largeOrgs) {
-                const largeOrgAverageScore = calculateLargeOrgScore(largeOrg.id); // Triggers full validation cascade
+                const largeOrgAverageScore = calculateLargeOrgScore(largeOrg.id);
                 
                 if (largeOrgAverageScore === 0) {
                     isValid = false;
@@ -669,11 +737,9 @@
                 }
                 grandTotalAverageScore += largeOrgAverageScore;
 
-                // Crucial: Calculate the total SUM of squared participant scores (S_p^2) for allocation pot
                 let totalSumOfSquaredParticipantScores = 0;
                 largeOrg.smallOrgs.forEach(s => {
                     s.participants.forEach(p => {
-                        // Check if participant score is valid before including in total
                         if(isParticipantInputValid(p)) {
                              totalSumOfSquaredParticipantScores += getParticipantSquaredContribution(p);
                         }
@@ -695,24 +761,26 @@
             }
             errorBox.classList.add('hidden');
 
-            // 2. Final Proportional Allocation (Top-Down)
+            // 2. Final Proportional Allocation
             const finalResults = [];
             const finalOrgRatios = [];
+            
+            // Get the base score label without the colon for display in parentheses
+            const scoreLabelBase = keys.large_org_score_label.endsWith(':') 
+                ? keys.large_org_score_label.slice(0, -1) 
+                : keys.large_org_score_label;
+
+            const currentLang = getLang();
 
             for (const largeOrg of calculatedOrgs) {
-                // Step 7: Calculate Large Org Proportion (P_main) based on the WEIGHTED AVERAGE SCORE
                 const largeOrgRatio = (largeOrg.weightedAverageScore / grandTotalAverageScore) * 100;
                 finalOrgRatios.push({ name: largeOrg.name, ratio: largeOrgRatio, score: largeOrg.weightedAverageScore });
 
                 largeOrg.smallOrgs.forEach(smallOrg => {
                     smallOrg.participants.forEach(participant => {
-                        // Only allocate if participant's score is valid
                         if(isParticipantInputValid(participant)) {
-                            // Calculate Participant Squared Contribution (S_p^2)
                             const pSquaredContribution = getParticipantSquaredContribution(participant);
 
-                            // Step 8: Calculate Participant Final Proportion (P_p)
-                            // P_p = P_main * (Participant's S_p^2 / Total S_p^2 of ALL Participants in the Main Org)
                             let participantRatio = 0;
                             if (largeOrg.totalSumOfSquaredParticipantScores > 0) {
                                 participantRatio = largeOrgRatio * (pSquaredContribution / largeOrg.totalSumOfSquaredParticipantScores);
@@ -730,29 +798,61 @@
             }
 
             // 3. Display Results
-            // Sort participant results by final ratio descending
             finalResults.sort((a, b) => b.finalRatio - a.finalRatio);
             
-            // Large Org Results
-            let orgHtml = finalOrgRatios.map(org => `
-                <div class="flex justify-between border-b border-gray-300 pb-1 last:border-b-0">
-                    <span class="text-sm text-secondary font-medium">${org.name} (${keys.large_org_score_label.replace(":", "")}: ${org.score.toFixed(2)})</span>
-                    <span class="text-lg font-bold text-blue-600">${org.ratio.toFixed(2)}%</span>
-                </div>
-            `).join('');
+            
+            let orgHtml = finalOrgRatios.map(org => {
+                // Now uses the full stored name: Organization (组织) or 组织 (Organization)
+                const displayName = getDisplayableName(org.name, currentLang); 
+
+                return `
+                    <div class="flex justify-between border-b border-gray-300 pb-1 last:border-b-0">
+                        <span class="text-sm text-secondary font-medium">${displayName} (${scoreLabelBase}: ${org.score.toFixed(2)})</span>
+                        <span class="text-lg font-bold text-blue-600">${org.ratio.toFixed(2)}%</span>
+                    </div>
+                `;
+            }).join('');
             largeOrgResults.innerHTML = orgHtml;
 
-            // Participant Results
-            let participantHtml = finalResults.map(p => `
-                <div class="border-b border-gray-200 pb-1 last:border-b-0">
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm text-gray-800 font-medium">${p.name}</span>
-                        <span class="text-md font-bold text-primary">${p.finalRatio.toFixed(2)}%</span>
+            let participantHtml = finalResults.map(p => {
+                // Now uses the full stored names in the detail view: Organization (组织) / Data Curation (数据管理)
+                const largeOrgDisplayName = getDisplayableName(p.largeOrgName, currentLang);
+                const smallOrgDisplayName = getDisplayableName(p.smallOrgName, currentLang);
+
+                return `
+                    <div class="border-b border-gray-200 pb-1 last:border-b-0">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-800 font-medium">${p.name}</span>
+                            <span class="text-md font-bold text-primary">${p.finalRatio.toFixed(2)}%</span>
+                        </div>
+                        <p class="text-xs text-gray-500 italic">(${largeOrgDisplayName} / ${smallOrgDisplayName})</p>
                     </div>
-                    <p class="text-xs text-gray-500 italic">(${p.largeOrgName} / ${p.smallOrgName})</p>
+                `;
+            }).join('');
+            participantResults.innerHTML = participantHtml;
+
+            const aggregatedMap = {};
+            finalResults.forEach(item => {
+                const normName = item.name.trim();
+                if (aggregatedMap[normName]) {
+                    aggregatedMap[normName] += item.finalRatio;
+                } else {
+                    aggregatedMap[normName] = item.finalRatio;
+                }
+            });
+
+            const aggregatedResults = Object.keys(aggregatedMap).map(name => ({
+                name: name,
+                totalRatio: aggregatedMap[name]
+            })).sort((a, b) => b.totalRatio - a.totalRatio);
+
+            let aggregatedHtml = aggregatedResults.map(p => `
+                <div class="flex justify-between items-center border-b border-blue-200 pb-2 last:border-b-0 py-1">
+                    <span class="text-base text-gray-900 font-bold">${p.name}</span>
+                    <span class="text-lg font-bold text-emerald-600">${p.totalRatio.toFixed(2)}%</span>
                 </div>
             `).join('');
-            participantResults.innerHTML = participantHtml;
+            participantAggregatedResults.innerHTML = aggregatedHtml;
 
             resultsContainer.classList.remove('hidden');
         }
@@ -769,6 +869,7 @@
                     if (element.tagName === 'TITLE') {
                         document.title = keys[key];
                     } else if (element.tagName === 'INPUT' && element.placeholder) {
+                        // Placeholders should be set correctly from translations
                         element.placeholder = keys[key];
                     } else if (element.tagName === 'BUTTON') {
                         element.textContent = keys[key];
@@ -778,31 +879,52 @@
                 }
             });
             
+            // Re-render hierarchy to apply the new language formatting to input values
             renderHierarchy(); 
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            const selector = document.getElementById('language-selector');
+            const currentLang = selector.value || 'zh';
+
+            // Select the correct default structure based on language
+            const initialStructure = currentLang === 'en' ? hierarchyStructureEN : hierarchyStructureZH;
+
             // Initial setup: Add the predefined hierarchical structure
             if (largeOrgs.length === 0) {
-                // Iterate through the new default structure
-                for (const largeOrgName in defaultHierarchyStructure) {
-                    if (Object.hasOwnProperty.call(defaultHierarchyStructure, largeOrgName)) {
-                        const smallOrgNames = defaultHierarchyStructure[largeOrgName];
-                        // Pass the large org name and the specific list of small org names
+                for (const largeOrgName in initialStructure) {
+                    if (Object.hasOwnProperty.call(initialStructure, largeOrgName)) {
+                        const smallOrgNames = initialStructure[largeOrgName];
                         addLargeOrganization(largeOrgName, smallOrgNames); 
                     }
                 }
             }
 
-            const selector = document.getElementById('language-selector');
             selector.addEventListener('change', (event) => {
-                setLanguage(event.target.value);
+                // To force re-render with new language strings, we must clear and reload data
+                const newLang = event.target.value;
+                const newStructure = newLang === 'en' ? hierarchyStructureEN : hierarchyStructureZH;
+                
+                // Reset everything to reload defaults in the correct language format
+                largeOrgs = [];
+                nextLargeOrgId = 1;
+                nextSmallOrgId = 100;
+                nextParticipantId = 1000;
+                
+                for (const largeOrgName in newStructure) {
+                    if (Object.hasOwnProperty.call(newStructure, largeOrgName)) {
+                        const smallOrgNames = newStructure[largeOrgName];
+                        addLargeOrganization(largeOrgName, smallOrgNames); 
+                    }
+                }
+                
+                setLanguage(newLang); // Re-render and set text
             });
             
             // Set initial language and render
-            setLanguage(selector.value);
+            setLanguage(currentLang);
             
-            // Run initial calculation to update scores and display results (should be 0/invalid initially)
+            // Run initial calculation
             largeOrgs.forEach(org => {
                 org.smallOrgs.forEach(sub => calculateSmallOrgScore(org.id, sub.id));
                 calculateLargeOrgScore(org.id);
@@ -811,7 +933,6 @@
         });
     </script>
     
-    <!-- 页脚 -->
     <footer class="mt-16 w-full max-w-5xl border-t pt-8 text-center text-secondary text-sm">
         <p data-lang-cn="&copy; 2025 QuIReC. All rights reserved. Thanks for the assist and support by the Google Gemini large language model for the development of this website." data-lang-en="&copy; 2025 QuIReC. All rights reserved. Thanks for the assist and support by the Google Gemini large language model for the development of this website.">&copy; 2025 QuIReC. All rights reserved. Thanks for the assist and support by the Google Gemini large language model for the development of this website.</p>
     </footer>
