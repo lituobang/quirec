@@ -172,9 +172,11 @@
         };
 
         function toggleLanguage() {
-            currentLang = currentLang === 'cn' ? 'en' : 'cn';
-            updateText(currentLang);
-        }
+    currentLang = currentLang === 'cn' ? 'en' : 'cn';
+    // 将新的语言设置保存到 localStorage
+    localStorage.setItem('qui-rec-lang', currentLang); 
+    updateText(currentLang);
+}
 
         window.onload = () => {
             // Render lucide icons on load
