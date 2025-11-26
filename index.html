@@ -126,7 +126,8 @@
     </footer>
 
     <script>
-        let currentLang = 'cn';
+        const storedLang = localStorage.getItem('qui-rec-lang');
+        let currentLang = storedLang || (document.documentElement.lang === 'zh-CN' ? 'cn' : 'en');
         
         const updateText = (lang) => {
             document.querySelectorAll('[data-lang-cn], [data-lang-en]').forEach(element => {
